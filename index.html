@@ -86,13 +86,11 @@
             <div class="sites-section">
                 <h2>Meus Sistemas</h2>
                 <div class="sites-grid" id="sites-container">
-                    <!-- Os sistemas serão carregados aqui dinamicamente -->
-                </div>
+                    </div>
             </div>
         </div>
     </main>
 
-    <!-- Modal para adicionar/editar sistema -->
     <div class="modal" id="site-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -110,12 +108,12 @@
                         <input type="url" id="site-url" class="form-control" placeholder="https://exemplo.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="supabase-url">URL do Supabase</label>
-                        <input type="url" id="supabase-url" class="form-control" placeholder="https://seu-projeto.supabase.co" required>
+                        <label for="supabase-url">URL do Supabase (Opcional)</label>
+                        <input type="url" id="supabase-url" class="form-control" placeholder="https://seu-projeto.supabase.co">
                     </div>
                     <div class="form-group">
-                        <label for="supabase-key">Chave API do Supabase</label>
-                        <input type="password" id="supabase-key" class="form-control" placeholder="sua-chave-secreta" required>
+                        <label for="supabase-key">Chave API do Supabase (Opcional)</label>
+                        <input type="password" id="supabase-key" class="form-control" placeholder="Não recomendado - Não será salvo">
                     </div>
                     <div class="form-group">
                         <label for="site-description">Descrição do Sistema</label>
@@ -146,6 +144,8 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
