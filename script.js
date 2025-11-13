@@ -1,7 +1,4 @@
-// NOVO: As chaves SUPABASE_URL e SUPABASE_KEY vêm do ficheiro 'config.js'
-// que foi carregado antes deste no index.html.
-
-// Inicializa o cliente Supabase usando as variáveis do config.js
+// As chaves SUPABASE_URL e SUPABASE_KEY vêm do ficheiro 'config.js'
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Variável global para guardar os sites carregados da DB
@@ -50,7 +47,6 @@ function setupEventListeners() {
 // Função para atualizar os cartões de estatísticas
 function updateStats() {
     const total = sites.length;
-    // Assumindo que o status é 'online' ou 'offline'
     const online = sites.filter(s => s.status === 'online').length;
     const offline = total - online;
     
@@ -62,6 +58,7 @@ function updateStats() {
 // Renderizar sites na tela (agora é async)
 async function renderSites() {
     // 1. Carregar dados do Supabase
+    // Pedimos explicitamente a coluna 'supabaseurl' (minúsculas)
     const { data, error } = await sb.from('sites').select('*').order('created_at', { ascending: false });
     
     if (error) {
@@ -70,9 +67,7 @@ async function renderSites() {
         return;
     }
     
-    sites = data; // Atualiza a nossa variável global
-    
-    // 2. Atualizar estatísticas
+    sites = data; 
     updateStats();
 
     // 3. Renderizar HTML
@@ -93,6 +88,7 @@ async function renderSites() {
     sites.forEach(site => {
         const siteCard = document.createElement('div');
         siteCard.className = 'site-card';
+        // Usamos site.name, site.url, etc. Os dados vêm do Supabase
         siteCard.innerHTML = `
             <div class="site-header">
                 <div class="site-name">${site.name}</div>
@@ -129,7 +125,6 @@ async function renderSites() {
         sitesContainer.appendChild(siteCard);
     });
     
-    // Adicionar event listeners aos botões (recriados após renderização)
     setupCardEventListeners();
 }
 
@@ -144,7 +139,7 @@ function setupCardEventListeners() {
     
     document.querySelectorAll('.edit-site').forEach(button => {
         button.addEventListener('click', function() {
-            const siteId = this.getAttribute('data-id'); // ID do Supabase (UUID)
+            const siteId = this.getAttribute('data-id');
             openEditModal(siteId);
         });
     });
@@ -164,7 +159,6 @@ function openAddModal() {
     modalTitle.textContent = 'Adicionar Novo Site';
     siteForm.reset();
     siteModal.classList.add('active');
-    // Limpa o formulário de dados de edição anterior
     document.getElementById('site-name').value = '';
     document.getElementById('site-url').value = '';
     document.getElementById('supabase-url').value = ''; 
@@ -180,11 +174,12 @@ function openEditModal(siteId) {
     editingSiteId = siteId;
     modalTitle.textContent = 'Editar Site';
     
-    // Preencher formulário com dados do site
     document.getElementById('site-name').value = site.name;
     document.getElementById('site-url').value = site.url;
-    document.getElementById('supabase-url').value = site.supabaseUrl || '';
-    document.getElementById('supabase-key').value = ''; // Nunca preencher a chave
+    // **CORREÇÃO AQUI**
+    // Lê de 'site.supabaseurl' (minúsculas)
+    document.getElementById('supabase-url').value = site.supabaseurl || ''; 
+    document.getElementById('supabase-key').value = '';
     document.getElementById('site-description').value = site.description || '';
     
     siteModal.classList.add('active');
@@ -214,29 +209,28 @@ async function handleFormSubmit(e) {
     e.preventDefault();
     setLoading(true);
     
+    // **CORREÇÃO AQUI**
+    // A chave do objeto agora é 'supabaseurl' (minúsculas)
     const formData = {
         name: document.getElementById('site-name').value,
         url: document.getElementById('site-url').value,
-        supabaseUrl: document.getElementById('supabase-url').value, // Mantido, mas não recomendado
+        supabaseurl: document.getElementById('supabase-url').value, 
         description: document.getElementById('site-description').value,
-        status: 'online' // Status padrão ao adicionar/editar
+        status: 'online'
     };
-    
-    // Não guardamos a 'supabase-key'
     
     let error;
     
     if (editingSiteId) {
-        // Atualizar site existente
         error = await updateSite(editingSiteId, formData);
     } else {
-        // Adicionar novo site
         error = await addSite(formData);
     }
     
     setLoading(false);
     
     if (error) {
+        // O erro não deve mais acontecer, mas se acontecer, será mostrado
         alert('Erro ao salvar sistema: ' + error.message);
     } else {
         closeSiteModal();
@@ -264,7 +258,7 @@ async function deleteSite(siteId) {
         if (error) {
             alert('Erro ao excluir site: ' + error.message);
         } else {
-            await renderSites(); // Recarrega a lista
+            await renderSites(); 
         }
     }
 }
