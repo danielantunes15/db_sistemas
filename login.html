@@ -29,6 +29,15 @@
                 <p id="form-subtitle">Bem-vindo de volta! Por favor, insira seus dados.</p>
                 
                 <form id="login-form">
+                    <!-- NOVO: Seletor de Tipo de Acesso -->
+                    <div class="form-group">
+                        <label for="login-type">Tipo de Acesso</label>
+                        <select id="login-type" class="form-control" required>
+                            <option value="empresa">Empresa</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    
                     <div class="form-group floating">
                         <input type="email" id="login-email" class="form-control" placeholder=" " required>
                         <label for="login-email">Email</label>

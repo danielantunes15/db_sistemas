@@ -42,7 +42,7 @@
 .login-brand .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
-    color: white; /* Cor do texto do logo */
+    color: white;
 }
 
 .login-brand h1 {
@@ -68,7 +68,7 @@
 .login-card {
     width: 100%;
     max-width: 420px;
-    padding: 1rem; /* Reduzido, pois os campos têm margem */
+    padding: 1rem;
     background: white;
 }
 
@@ -84,6 +84,39 @@
     margin-bottom: 2rem;
 }
 
+/* --- NOVO: Estilo para o seletor de tipo de acesso --- */
+.login-card .form-group:not(.floating) {
+    margin-bottom: 1.5rem;
+}
+
+.login-card .form-group:not(.floating) label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.login-card .form-group:not(.floating) select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: white;
+}
+
+.login-card .form-group:not(.floating) select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.login-card .form-group:not(.floating) select:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
 /* --- Formulário com Etiqueta Flutuante --- */
 .form-group.floating {
     position: relative;
@@ -94,7 +127,6 @@
     height: 50px;
 }
 
-/* O " " no placeholder é importante para a animação */
 .form-group.floating label {
     position: absolute;
     top: 15px;
@@ -109,7 +141,7 @@
 
 .form-group.floating .form-control:focus + label,
 .form-group.floating .form-control:not(:placeholder-shown) + label {
-    top: -10px; /* Sobe a etiqueta */
+    top: -10px;
     left: 0.75rem;
     font-size: 0.8rem;
     color: var(--primary-color);
@@ -121,7 +153,6 @@
 .form-group.floating .form-control:not(:placeholder-shown) {
     padding-top: 1rem;
 }
-
 
 /* --- Ações do Formulário --- */
 .login-card .form-actions {

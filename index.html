@@ -28,6 +28,7 @@
                         Meus Chamados
                     </button>
                     <span class="user-name" id="user-email">Carregando...</span>
+                    <span class="user-type-badge" id="user-type-badge">Empresa</span>
                     <div class="user-avatar" id="user-avatar">DB</div>
                     <button class="btn btn-danger" id="logout-btn" style="padding: 0.5rem 1rem;">Sair</button>
                 </div>
@@ -39,14 +40,14 @@
         <div class="container">
             <div class="dashboard-header">
                 <div class="header-info">
-                    <h1>Painel de Controle</h1>
-                    <p>Gerencie todos os seus sistemas em um único lugar</p>
+                    <h1 id="main-title">Painel de Controle</h1>
+                    <p id="main-subtitle">Gerencie todos os seus sistemas em um único lugar</p>
                 </div>
                 <button class="btn btn-primary" id="add-site-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>
-                    Novo Sistema
+                    <span id="add-site-text">Novo Sistema</span>
                 </button>
             </div>
 
@@ -57,7 +58,7 @@
                     </div>
                     <div class="stat-info">
                         <h3 id="total-systems">0</h3>
-                        <p>Sistemas Totais</p>
+                        <p id="stat-systems-text">Sistemas Totais</p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -66,7 +67,7 @@
                     </div>
                     <div class="stat-info">
                         <h3 id="online-systems">0</h3>
-                        <p>Sistemas Online</p>
+                        <p id="stat-online-text">Sistemas Online</p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -75,19 +76,21 @@
                     </div>
                     <div class="stat-info">
                         <h3 id="offline-systems">0</h3>
-                        <p>Sistemas Offline</p>
+                        <p id="stat-offline-text">Sistemas Offline</p>
                     </div>
                 </div>
             </div>
 
             <div class="sites-section">
-                <h2>Meus Sistemas</h2>
+                <h2 id="section-title">Meus Sistemas</h2>
                 <div class="sites-grid" id="sites-container">
-                    </div>
+                    <!-- Conteúdo dinâmico baseado no tipo de usuário -->
+                </div>
             </div>
         </div>
     </main>
 
+    <!-- Modal para Adicionar/Editar Site -->
     <div class="modal" id="site-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -120,6 +123,7 @@
         </div>
     </div>
 
+    <!-- Modal Financeiro -->
     <div class="modal" id="finance-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -137,8 +141,10 @@
         </div>
     </div>
 
+    <!-- Modal de Chamados -->
     <div class="modal" id="chamados-modal">
-        <div class="modal-content" style="max-width: 800px;"> <div class="modal-header">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
                 <h2>Central de Chamados</h2>
                 <button class="close-modal" id="close-chamados-modal">&times;</button>
             </div>
@@ -175,6 +181,57 @@
         </div>
     </div>
 
+    <!-- Modal para Gerenciar Empresas (Admin) -->
+    <div class="modal" id="empresas-modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Gerenciar Empresas</h2>
+                <button class="close-modal" id="close-empresas-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-actions" style="justify-content: flex-start; margin-bottom: 1rem;">
+                    <button class="btn btn-primary" id="nova-empresa-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                        Nova Empresa
+                    </button>
+                </div>
+                
+                <div id="empresas-list-container">
+                    <!-- Lista de empresas será carregada aqui -->
+                </div>
+
+                <form id="empresa-form" style="display: none; margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+                    <h4 id="empresa-form-title">Nova Empresa</h4>
+                    <div class="form-group">
+                        <label for="empresa-nome">Nome da Empresa</label>
+                        <input type="text" id="empresa-nome" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa-email">Email</label>
+                        <input type="email" id="empresa-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa-cnpj">CNPJ</label>
+                        <input type="text" id="empresa-cnpj" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa-telefone">Telefone</label>
+                        <input type="tel" id="empresa-telefone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa-endereco">Endereço</label>
+                        <textarea id="empresa-endereco" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancel-empresa-btn">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Empresa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
