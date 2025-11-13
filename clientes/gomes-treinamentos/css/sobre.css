@@ -1,0 +1,234 @@
+/* About Hero */
+.about-hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+    color: var(--white);
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.about-hero p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+}
+
+/* About Story */
+.about-story {
+    padding: 4rem 0;
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.story-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+}
+
+.story-content h3 {
+    color: var(--secondary-color);
+    margin: 2rem 0 1rem 0;
+    font-size: 1.5rem;
+}
+
+.story-content p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.story-image .image-placeholder {
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    text-align: center;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ddd;
+}
+
+.story-image .image-placeholder span {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* About Values */
+.about-values {
+    padding: 4rem 0;
+    background-color: var(--light-bg);
+}
+
+.about-values h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.value-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.value-card h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* About Team */
+.about-team {
+    padding: 4rem 0;
+}
+
+.about-team h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.team-member {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+}
+
+.member-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--light-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    border: 3px solid var(--secondary-color);
+}
+
+.member-photo span {
+    font-size: 3rem;
+}
+
+.team-member h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.member-role {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.member-bio {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* About Numbers */
+.about-numbers {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
+    color: var(--white);
+}
+
+.about-numbers h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+}
+
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.number-item {
+    text-align: center;
+}
+
+.number {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.number-item p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Responsividade para Sobre */
+@media (max-width: 768px) {
+    .about-hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .story-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .story-image .image-placeholder {
+        height: 200px;
+        padding: 2rem;
+    }
+    
+    .story-image .image-placeholder span {
+        font-size: 3rem;
+    }
+    
+    .about-values h2,
+    .about-team h2,
+    .about-numbers h2 {
+        font-size: 2rem;
+    }
+    
+    .number {
+        font-size: 2.5rem;
+    }
+}

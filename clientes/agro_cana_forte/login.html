@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AGRO CANA FORTE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#2c7744">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1 class="logo-login">AGRO CANA FORTE</h1>
+                <p class="slogan">Sistema de Gestão Agrícola</p>
+            </div>
+            
+            <form id="login-form" class="form">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div id="login-message" class="message" style="display: none;"></div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-login">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Configuração do Supabase
+        const SUPABASE_URL = 'https://fwkybhfzfrovjausuqgn.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3a3liaGZ6ZnJvdmphdXN1cWduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg1MDI4OTgsImV4cCI6MjA3NDA3ODg5OH0.M7fN2ML2C4Lc1skLZx9YWyA9CUq813V6DNXP2QdTV0E';
+
+        // Inicializar Supabase
+        window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById("login-form");
+            const msg = document.getElementById("login-message");
+
+            // Verificar se já está logado
+            if (window.sistemaAuth && window.sistemaAuth.verificarAutenticacao()) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                msg.style.display = "none";
+
+                const username = document.getElementById("username").value.trim();
+                const password = document.getElementById("password").value;
+
+                if (!username || !password) {
+                    msg.style.display = "block";
+                    msg.className = "message error";
+                    msg.textContent = "Preencha usuário e senha";
+                    return;
+                }
+
+                try {
+                    const resultado = await window.sistemaAuth.fazerLogin(username, password);
+                    
+                    if (resultado.success) {
+                        msg.style.display = "block";
+                        msg.className = "message success";
+                        msg.textContent = "Login realizado com sucesso!";
+                        
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1000);
+                    } else {
+                        throw new Error(resultado.error);
+                    }
+                    
+                } catch (err) {
+                    msg.style.display = "block";
+                    msg.className = "message error";
+                    msg.textContent = err.message || "Erro no login.";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

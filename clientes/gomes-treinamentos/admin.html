@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gerenciador de Conteúdo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        /* Estilos inline para configurar o layout da página de administração */
+        body { background-color: #f5f7fa; }
+        .admin-page-body { 
+            display: flex; 
+            min-height: 100vh;
+        }
+        .header { display: none; } /* Oculta o cabeçalho padrão */
+    </style>
+</head>
+<body class="admin-page-body">
+    
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Painel Gerente</h3>
+            <span>Gomes Treinamentos</span>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#" data-view="overview" class="active">📊 Visão Geral</a></li>
+                <li><a href="#" data-view="courses">📚 Gestão de Cursos</a></li>
+                <li><a href="#" data-view="students">👥 Alunos Inscritos</a></li>
+                <li><a href="#" data-view="upload">⬆️ Upload de Conteúdo</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout()" class="btn-logout">Sair</a>
+        </div>
+    </aside>
+
+    <main class="main-content-admin">
+        <h1>Dashboard Administrativo</h1>
+        <p class="admin-subtitle">Bem-vindo(a), Gerente Clovis Gomes. Status do sistema em tempo real.</p>
+
+        <section class="admin-section active" id="overview">
+            <h2>Métricas Chave</h2>
+            <div class="metrics-grid">
+                <div class="metric-card primary-bg">
+                    <h4>Vendas (Mês)</h4>
+                    <p id="metric-sales">R$ 4.500</p>
+                    <span>+15% vs Mês Anterior</span>
+                </div>
+                <div class="metric-card secondary-bg">
+                    <h4>Alunos Ativos</h4>
+                    <p id="metric-students">128</p>
+                    <span>+5 novos inscritos</span>
+                </div>
+                <div class="metric-card accent-bg">
+                    <h4>Cursos em Catálogo</h4>
+                    <p id="metric-courses">7</p>
+                    <span>Foco em NRs e Bombeiro</span>
+                </div>
+                <div class="metric-card success-bg">
+                    <h4>Satisfação Média</h4>
+                    <p id="metric-satisfaction">4.8</p>
+                    <span>Baseado em 55 avaliações</span>
+                </div>
+            </div>
+
+            <h2>Atividade Recente</h2>
+            <div class="recent-activity">
+                <p>Nenhuma atividade crítica recente. Sistema operacional.</p>
+            </div>
+        </section>
+
+        <section class="admin-section" id="courses">
+            <h2>Gestão de Cursos e Conteúdo</h2>
+            <button class="btn-primary" onclick="showSection('upload')">Novo Curso / Upload</button>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título do Curso</th>
+                            <th>Duração</th>
+                            <th>Preço</th>
+                            <th>Alunos Ativos</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="course-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="admin-section" id="students">
+            <h2>Lista de Alunos Inscritos</h2>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Data Cadastro</th>
+                            <th>Cursos Ativos</th>
+                            <th>Progresso Médio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="admin-section" id="upload">
+            <h2>Upload e Edição de Conteúdo</h2>
+            <div class="admin-alert">
+                <p>⚠️ **Lembrete:** A funcionalidade de upload é simulada. Em um sistema real, este formulário enviaria dados e arquivos para um servidor.</p>
+            </div>
+
+            <div class="content-upload-form">
+                <h3>Publicar Novo Módulo/Vídeo</h3>
+                <form onsubmit="handleUploadSubmit(event)">
+                    <div class="form-group">
+                        <label for="courseSelect">Curso Pai</label>
+                        <select id="courseSelect">
+                            <option value="1">NR 10 - Eletricidade</option>
+                            <option value="2">NR 35 - Altura</option>
+                            <option value="7">NR 23 - Incêndios</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="moduleTitle">Título do Módulo/Aula</label>
+                        <input type="text" id="moduleTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoFile">Upload do Vídeo (MP4, etc.)</label>
+                        <input type="file" id="videoFile" accept="video/*" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Publicar Conteúdo</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+    
+    <script src="js/login.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

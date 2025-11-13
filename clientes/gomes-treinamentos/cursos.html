@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos - Gomes Treinamentos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cursos.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Gomes Treinamentos</h1>
+                <span>Especialista em NRs e Bombeiro</span>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="cursos.html" class="active">Cursos</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn-login">Login</button>
+                <button class="btn-register">Cadastre-se</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="courses-hero">
+            <div class="container">
+                <h1>Nossos Cursos</h1>
+                <p>Capacitação completa em Normas Regulamentadoras e Segurança Contra Incêndio</p>
+            </div>
+        </section>
+
+        <section class="courses-filter">
+            <div class="container">
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="nr10">NR 10</button>
+                    <button class="filter-btn" data-filter="nr35">NR 35</button>
+                    <button class="filter-btn" data-filter="nr33">NR 33</button>
+                    <button class="filter-btn" data-filter="bombeiro">Bombeiro/Incêndio</button>
+                    <button class="filter-btn" data-filter="outros">Outras NRs</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="course-search" placeholder="Buscar curso...">
+                </div>
+            </div>
+        </section>
+
+        <section class="courses-list">
+            <div class="container">
+                <div class="courses-grid" id="courses-container">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Gomes Treinamentos</h3>
+                    <p>Especialistas em capacitação profissional e treinamentos em normas regulamentadoras.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cursos.html">Cursos</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>Email: contato@gomestreinamentos.com</p>
+                    <p>Telefone: (73) 99979-0920 - Clovis Gomes</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gomes Treinamentos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/cursos.js"></script>
+</body>
+</html>

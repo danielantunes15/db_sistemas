@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificado de Conclusão</title>
+    <script src="js/certificado.js"></script> 
+    <style>
+        /* CSS Integrado para garantir a impressão correta */
+        :root {
+            --primary-color: #1a2c4e;
+            --secondary-color: #007bff;
+            --accent-color: #dc3545;
+            --text-color: #333;
+        }
+
+        /* Configuração de impressão: A4 Paisagem e MARGEM SEGURA NO PDF */
+        @page {
+            size: A4 landscape;
+            /* Margem de 1cm em todos os lados para segurança na impressão */
+            margin: 1cm; 
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container principal: Ocupa 100% da área interna da margem de 1cm */
+        .certificate-container {
+            width: 100%; 
+            height: 100%;
+            margin: 0 auto; 
+            border: 5px solid var(--primary-color); 
+            padding: 25px; 
+            box-sizing: border-box;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+
+        /* AJUSTES FINAIS PARA COMPACTAR O CONTEÚDO VERTICALMENTE */
+        
+        .certificate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px; /* Reduzido de 20px */
+        }
+
+        .certificate-header .logo h1 {
+            font-size: 2.1rem; /* Reduzido levemente */
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .certificate-header .logo span {
+            font-size: 0.9rem;
+            color: #666;
+            display: block;
+        }
+
+        .certificate-header .title-section p {
+            font-size: 2.1rem; /* Reduzido levemente */
+            font-weight: 300;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .certificate-body {
+            flex-grow: 1;
+            text-align: center;
+            padding: 5px 0; /* Reduzido de 10px */
+        }
+
+        .verification {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 8px; /* Reduzido de 10px */
+        }
+
+        #student-name {
+            font-size: 3.0rem; /* Reduzido de 3.2rem */
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin: 3px 0 8px 0; /* Reduzido margens verticais */
+            font-weight: 700;
+            border-bottom: 2px solid var(--secondary-color);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .description {
+            font-size: 1.3rem; /* Reduzido de 1.4rem */
+            color: var(--text-color);
+            margin-bottom: 5px; 
+        }
+
+        #course-title {
+            font-size: 1.9rem; /* Reduzido de 2.0rem */
+            color: var(--accent-color); 
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 15px; /* Reduzido de 20px */
+            padding: 8px 15px;
+            background-color: #f5f7fa;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .details {
+            font-size: 1.05rem;
+            color: #444;
+            max-width: 85%;
+            margin: 0 auto 20px auto; /* Redução drástica de 30px */
+            line-height: 1.6;
+        }
+
+        .details strong {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        #cert-date {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px; /* Reduzido de 20px */
+        }
+
+        /* Rodapé e Assinaturas */
+        .certificate-footer {
+            border-top: 3px solid var(--secondary-color);
+            padding-top: 8px; /* Reduzido de 10px */
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .signature {
+            width: 45%;
+        }
+
+        .signature hr {
+            border: none;
+            border-top: 2px solid #333;
+            margin-bottom: 3px; /* Reduzido de 5px */
+        }
+
+        .signature p {
+            font-size: 0.85rem; /* Reduzido levemente */
+            margin: 2px 0;
+            color: #333;
+        }
+
+        #cert-number-display {
+            font-size: 1.0rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-top: 5px;
+        }
+
+        /* Estilo de impressão */
+        @media print {
+            .certificate-container {
+                box-shadow: none !important;
+                border: 5px solid var(--primary-color) !important; 
+                margin: 0 !important;
+                padding: 25px !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <header class="certificate-header">
+            <div class="logo">
+                <h1>Gomes Treinamentos</h1>
+                <span>Especialista em NRs e Bombeiro</span>
+            </div>
+            <div class="title-section">
+                <p>Certificado de Conclusão</p>
+            </div>
+        </header>
+        
+        <main class="certificate-body">
+            <p class="verification">Certificamos que</p>
+            
+            <h2 id="student-name"></h2>
+            
+            <p class="description">
+                Concluiu com êxito o treinamento profissional de
+            </p>
+            
+            <h3 id="course-title"></h3>
+            
+            <p class="details">
+                Com carga horária de <strong id="course-hours"></strong>, de acordo com as disposições da Norma Regulamentadora do MTE e legislação vigente.
+            </p>
+            
+            <p id="cert-date"></p>
+        </main>
+        
+        <footer class="certificate-footer">
+            <div class="signatures">
+                <div class="signature">
+                    <hr>
+                    <p>Clovis Gomes</p>
+                    <p>Engenheiro de Segurança do Trabalho e Instrutor</p>
+                    <p>Telefone: (73) 99979-0920</p>
+                </div>
+                <div class="signature">
+                    <p style="font-size: 0.8rem;">(Espaço para QR Code de Validação)</p>
+                    <hr style="border-top: 2px dashed #333;">
+                    <p>Certificado nº: <span id="cert-number-display"></span></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

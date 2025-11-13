@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Área do Aluno</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Gomes Treinamentos</h1>
+                <span>Dashboard do Aluno</span>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="dashboard.html" class="active">Meus Cursos</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="dashboard-hero">
+            <div class="container">
+                <h1>Bem-vindo(a), [Nome do Aluno]!</h1>
+                <p>Continue seus estudos e acompanhe seu progresso.</p>
+            </div>
+        </section>
+
+        <section class="progress-summary">
+            <div class="container">
+                <h2>Seu Progresso</h2>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h3>Cursos Matriculados</h3>
+                        <p id="total-courses">03</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Cursos Concluídos</h3>
+                        <p id="completed-courses">01</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Próxima Aula</h3>
+                        <p>NR 35 - Módulo 2</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-courses">
+            <div class="container">
+                <h2>Cursos Ativos</h2>
+                <div class="courses-list-dashboard" id="courses-dashboard-container">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Gomes Treinamentos</h3>
+                    <p>Especialistas em capacitação profissional e treinamentos em normas regulamentadoras.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cursos.html">Cursos</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>Email: contato@gomestreinamentos.com</p>
+                    <p>Telefone: (73) 99979-0920 - Clovis Gomes</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gomes Treinamentos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia - Scanner</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body id="scanner-page">
+    <div class="container">
+        <div class="header">
+            <h1>Scanner</h1>
+            <a href="dashboard-barbeiro.html" class="btn-secondary">Voltar</a>
+        </div>
+        
+        <div class="card">
+            <p>Posicione o QR Code do cliente dentro da área de leitura</p>
+            
+            <div id="reader" class="scanner-container" style="width: 100%; height: 300px; background: #3a3a3a; border-radius: 15px;">
+                </div>
+                
+            <div class="input-group" id="corteTypeGroup" style="display: none; margin-top: 20px;">
+                <label for="tipoCorte" style="color: var(--text-secondary); margin-bottom: 5px; display: block;">Tipo de Corte</label>
+                <select id="tipoCorte" style="width: 100%; padding: 15px; background: var(--input-bg); border: 2px solid transparent; border-radius: 12px; color: var(--text); font-size: 14px; appearance: none; cursor: pointer;">
+                    <option value="corte_pago">Corte Pago (Adicionar 1 ponto)</option>
+                    <option value="corte_gratis" disabled>Corte Grátis (Resgatar Fidelidade)</option>
+                </select>
+            </div>
+            <div id="result" class="result-container" style="display: none;">
+                </div>
+        </div>
+        
+        <div class="actions">
+            <button id="startScanner" class="btn btn-primary">Iniciar Scanner</button>
+            
+            <button id="stopScanner" class="btn btn-secondary" style="display:none;">Parar Scanner</button>
+            
+            <button id="confirmCorte" class="btn btn-success" style="display:none;">Confirmar Corte</button>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script src="js/pages/scanner.js"></script>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

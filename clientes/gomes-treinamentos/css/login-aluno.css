@@ -1,0 +1,118 @@
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 0.8s ease-out; /* Animação de entrada */
+}
+
+.login-box {
+    background: var(--white);
+    padding: 2.5rem; /* Mais espaço */
+    border-radius: 12px; /* Cantos mais arredondados */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); /* Sombra mais intensa */
+    text-align: center;
+    border-top: 5px solid var(--secondary-color); /* Linha de destaque no topo */
+}
+
+.login-box .logo {
+    margin-bottom: 2rem;
+}
+
+.login-box .logo h1 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.login-box .logo span {
+    color: var(--secondary-color);
+}
+
+.login-box h2 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.login-box .form-group {
+    text-align: left;
+    margin-bottom: 1.8rem;
+}
+
+.login-box .form-group label {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.6rem;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.login-box .form-group input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-box .form-group input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+.login-box .btn-submit {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.15rem;
+    margin-top: 1rem;
+}
+
+.login-box .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.signup-link {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Estilização para Mensagens de Erro/Sucesso */
+.login-message {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    display: none; /* Inicia oculto */
+    text-align: left;
+}
+
+.login-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.login-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia - Gerenciar Usuários</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    
+    <style>
+        .management-list { max-height: 400px; overflow-y: auto; }
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #444;
+        }
+        .list-item-info { flex: 1; }
+        .list-item-info h4 { margin-bottom: 5px; }
+        .list-item-info p { font-size: 0.85rem; color: var(--text-secondary); }
+        
+        /* O estilo .btn-delete foi removido daqui, pois agora usa .btn-danger de base.css */
+        
+        /* ATUALIZADO: Mobile-First (Padrão) */
+        .form-cadastro { 
+            display: grid; 
+            grid-template-columns: 1fr; /* 1 coluna por padrão */
+            gap: 15px; 
+        }
+        
+        /* Em telas maiores, usamos 2 colunas */
+        @media (min-width: 768px) {
+            .form-cadastro { grid-template-columns: 1fr 1fr; }
+            
+            .form-cadastro .btn {
+                /* Faz o botão ocupar as 2 colunas */
+                grid-column: span 2;
+            }
+
+            /* Garante que o input de senha ocupe 2 colunas no desktop */
+            .form-cadastro-senha { /* Seletor corrigido */
+                 grid-column: span 2;
+            }
+        }
+    </style>
+</head>
+<body id="gerenciamento-page">
+    <div class="container" id="managementPage">
+        <div class="header">
+            <h1>Gerenciar Usuários</h1>
+            <a href="dashboard-barbeiro.html" class="btn-secondary">Voltar</a>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showManagementTab('clientes')">Clientes</button>
+            <button class="tab-btn" onclick="showManagementTab('barbeiros')">Barbeiros</button>
+        </div>
+
+        <div id="tabClientes" class="management-tab active">
+            <div class="card">
+                <h3>Cadastrar Novo Cliente</h3>
+                <form id="adminCreateClienteForm" class="form-cadastro">
+                    <div class="input-group"><input type="text" id="adminNomeCliente" placeholder="Nome completo" required></div>
+                    <div class="input-group"><input type="text" id="adminCpfCliente" placeholder="CPF" required maxlength="14"></div>
+                    <div class="input-group"><input type="email" id="adminEmailCliente" placeholder="E-mail" required></div>
+                    <div class="input-group"><input type="date" id="adminNascCliente" placeholder="Data Nasc." required></div>
+                    
+                    <div class="input-group form-cadastro-senha">
+                        <input type="password" id="adminSenhaCliente" placeholder="Senha (mín. 6)" required minlength="6">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Cadastrar Cliente</button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <h3>Clientes Cadastrados</h3>
+                <div id="listaClientes" class="management-list">Carregando...</div>
+            </div>
+        </div>
+        
+        <div id="tabBarbeiros" class="management-tab" style="display: none;">
+            <div class="card">
+                <h3>Cadastrar Novo Barbeiro</h3>
+                <form id="adminCreateBarbeiroForm" class="form-cadastro">
+                    <div class="input-group"><input type="text" id="adminNomeBarbeiro" placeholder="Nome completo" required></div>
+                    <div class="input-group"><input type="text" id="adminCpfBarbeiro" placeholder="CPF" required maxlength="14"></div>
+                    <div class="input-group"><input type="email" id="adminEmailBarbeiro" placeholder="E-mail" required></div>
+                    <div class="input-group"><input type="password" id="adminSenhaBarbeiro" placeholder="Senha (mín. 6)" required minlength="6"></div>
+                    <button type="submit" class="btn btn-primary">Cadastrar Barbeiro</button>
+                </form>
+                </div>
+
+            <div class="card">
+                <h3>Barbeiros Cadastrados</h3>
+                <div id="listaBarbeiros" class="management-list">Carregando...</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script src="js/pages/gerenciamento.js"></script>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

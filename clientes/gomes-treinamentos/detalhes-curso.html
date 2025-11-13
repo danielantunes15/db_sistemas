@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Detalhes do Curso - Gomes Treinamentos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/detalhes-curso.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Gomes Treinamentos</h1>
+                <span>Especialista em NRs e Bombeiro</span>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="cursos.html" class="active">Cursos</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn-login">Login</button>
+                <button class="btn-register">Cadastre-se</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="course-detail-section">
+            <div class="container">
+                <div class="course-detail-grid">
+                    <div class="course-main-content">
+                        <span class="course-tag" id="course-category">NR 10</span>
+                        <h1 id="course-title-display">NR 10 - Segurança em Instalações Elétricas</h1>
+                        <p class="course-description-main">Capacitação completa para trabalhadores que interagem com eletricidade, garantindo a segurança em todas as etapas do serviço.</p>
+                        
+                        <div class="course-meta-full">
+                            <div>
+                                <h4>Duração</h4>
+                                <p id="course-duration-display">⏱️ 40 horas</p>
+                            </div>
+                            <div>
+                                <h4>Nível</h4>
+                                <p id="course-level-display">📊 Básico ao Avançado</p>
+                            </div>
+                        </div>
+                        
+                        <div class="course-content-list">
+                            <h2>Conteúdo Programático (Exemplo)</h2>
+                            <ul>
+                                <li>Introdução à segurança com eletricidade</li>
+                                <li>Riscos em instalações e serviços com eletricidade</li>
+                                <li>Técnicas de análise de risco</li>
+                                <li>Medidas de controle de risco elétrico</li>
+                                <li>Equipamentos de proteção individual e coletiva (EPI/EPC)</li>
+                                <li>Primeiros socorros e combate a incêndio</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="course-sidebar">
+                        <div class="price-box">
+                            <p class="price-label">Investimento Total</p>
+                            <span class="price-value" id="course-price-display">R$ 299,90</span>
+                            <a href="checkout.html?course_id=1" class="btn-primary btn-full-width">Comprar Agora e Cadastrar</a>
+                            <p class="includes-text">✅ Certificado Válido Incluso</p>
+                            <p class="includes-text">✅ Acesso Imediato ao Material</p>
+                        </div>
+
+                        <div class="instructor-box">
+                            <h4>Instrutor Principal</h4>
+                            <p>👨‍🏫 Clovis Gomes</p>
+                            <p class="instructor-bio">Engenheiro de Segurança do Trabalho com 20 anos de experiência em NRs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Gomes Treinamentos</h3>
+                    <p>Especialistas em capacitação profissional e treinamentos em normas regulamentadoras.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cursos.html">Cursos</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>Email: contato@gomestreinamentos.com</p>
+                    <p>Telefone: (73) 99979-0920 - Clovis Gomes</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gomes Treinamentos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/cursos.js"></script> 
+    <script>
+        // Lógica para carregar dinamicamente os detalhes do curso
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = parseInt(urlParams.get('id'));
+            
+            // Busca os dados no array coursesData (de js/cursos.js)
+            const course = coursesData.find(c => c.id === courseId) || coursesData[0]; // Pega NR 10 como fallback
+            
+            if (course) {
+                document.getElementById('page-title').textContent = course.title + ' - Detalhes';
+                document.getElementById('course-tag').textContent = course.category.toUpperCase();
+                document.getElementById('course-title-display').textContent = course.title;
+                document.querySelector('.course-description-main').textContent = course.description;
+                document.getElementById('course-duration-display').textContent = '⏱️ ' + course.duration;
+                document.getElementById('course-level-display').textContent = '📊 ' + course.level;
+                document.getElementById('course-price-display').textContent = course.price;
+                document.querySelector('.btn-full-width').href = `checkout.html?course_id=${course.id}&price=${course.price}&title=${encodeURIComponent(course.title)}`;
+            }
+        });
+    </script>
+</body>
+</html>

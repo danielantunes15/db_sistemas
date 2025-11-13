@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Style - Login</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body id="login-page" class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo-container">
+                <img src="images/style.png" alt="Barbearia Style" class="logo-img" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <h1>Barbearia Style</h1>
+                    <p>Estilo que transforma</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('cliente')">
+                <span class="tab-icon">👤</span>
+                Cliente
+            </button>
+            <button class="tab-btn" onclick="showTab('barbeiro')">
+                <span class="tab-icon">💈</span>
+                Barbeiro
+            </button>
+        </div>
+        
+        <div class="forms-container">
+            <form id="loginClienteForm" class="login-form active">
+                <h2>Acesse sua conta</h2>
+                
+                <div class="input-group">
+                    <div class="input-icon">🔢</div>
+                    <input type="text" id="cpfCliente" placeholder="Seu CPF" required maxlength="14">
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">🔒</div>
+                    <input type="password" id="passwordCliente" placeholder="Sua senha" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <span class="btn-icon">→</span>
+                    Entrar como Cliente
+                </button>
+                
+                <div class="login-footer">
+                    <p>Não tem uma conta? <a href="cadastro.html" class="link">Cadastre-se</a></p>
+                </div>
+            </form>
+            
+            <form id="loginBarbeiroForm" class="login-form">
+                <h2>Acesso Barbeiro</h2>
+                
+                <div class="input-group">
+                    <div class="input-icon">🔢</div>
+                    <input type="text" id="cpfBarbeiro" placeholder="Seu CPF" required maxlength="14">
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">🔒</div>
+                    <input type="password" id="passwordBarbeiro" placeholder="Senha de acesso" required>
+                </div>
+                
+                <button type="submit" class="btn btn-barbeiro">
+                    <span class="btn-icon">💈</span>
+                    Entrar como Barbeiro
+                </button>
+            </form>
+            </div>
+        
+        <div class="login-features">
+            <div class="feature">
+                <span class="feature-icon">✂️</span>
+                <span>Cortes Premium</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <span>Fidelidade Style</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">⭐</span>
+                <span>Experiência Única</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script src="js/pages/login.js"></script>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
