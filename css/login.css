@@ -1,40 +1,32 @@
 /* css/login.css */
 
-/* --- Layout da Página de Login --- */
-body {
+/* --- Layout Principal (Split Screen) --- */
+.login-wrapper {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: white;
+}
+
+/* --- Coluna da Esquerda (Branding) --- */
+.login-brand {
+    width: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-brand .logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
 }
 
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 2rem;
-}
-
-.login-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-}
-
-.login-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.login-header .logo {
-    display: flex; /* Adicionado para centralizar */
-    align-items: center; /* Adicionado */
-    justify-content: center; /* Adicionado */
-    gap: 0.5rem; /* Adicionado */
-    margin-bottom: 1rem;
-}
-
-.logo-db {
+.login-brand .logo-db {
     background-color: var(--secondary-color);
     color: var(--primary-dark);
     width: 40px;
@@ -47,47 +39,206 @@ body {
     font-size: 1.2rem;
 }
 
-.logo-text {
+.login-brand .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--dark-color); /* Mudado de branco para escuro */
+    color: white; /* Cor do texto do logo */
+}
+
+.login-brand h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.login-brand p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- Coluna da Direita (Formulário) --- */
+.login-form-wrapper {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 1rem; /* Reduzido, pois os campos têm margem */
+    background: white;
+}
+
+.login-card h2 {
+    font-size: 1.8rem;
+    color: var(--dark-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.login-card p {
+    color: var(--gray-color);
+    margin-bottom: 2rem;
+}
+
+/* --- Formulário com Etiqueta Flutuante --- */
+.form-group.floating {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-group.floating .form-control {
+    height: 50px;
+}
+
+/* O " " no placeholder é importante para a animação */
+.form-group.floating label {
+    position: absolute;
+    top: 15px;
+    left: 1rem;
+    color: var(--gray-color);
+    pointer-events: none;
+    transition: var(--transition);
+    font-size: 1rem;
+    padding: 0 0.25rem;
+    background-color: white;
+}
+
+.form-group.floating .form-control:focus + label,
+.form-group.floating .form-control:not(:placeholder-shown) + label {
+    top: -10px; /* Sobe a etiqueta */
+    left: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+}
+
+.form-group.floating .form-control:focus {
+    padding-top: 1rem;
+}
+.form-group.floating .form-control:not(:placeholder-shown) {
+    padding-top: 1rem;
 }
 
 
-.login-header h2 {
-    font-size: 1.5rem;
-    color: var(--dark-color);
+/* --- Ações do Formulário --- */
+.login-card .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-link {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.login-card .btn-primary {
+    padding: 0.8rem 2rem;
 }
 
 #auth-message {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     color: var(--danger-color);
     font-size: 0.9rem;
 }
 
-.login-container p {
+/* --- Divisor (OU) --- */
+.form-divider {
+    display: flex;
+    align-items: center;
     text-align: center;
-    margin-top: 1rem;
     color: var(--gray-color);
+    margin: 2rem 0;
 }
 
-.login-container p a {
+.form-divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.form-divider span {
+    padding: 0 1rem;
+    font-size: 0.9rem;
+}
+
+/* --- Botões Sociais --- */
+.social-logins {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.btn-social {
+    padding: 0.7rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: white;
+    color: var(--dark-color);
+}
+
+.btn-social:hover {
+    background-color: #f5f7fb;
+}
+
+.btn-social svg {
+    margin-top: -2px;
+}
+
+/* --- Link de Alternar (Cadastro) --- */
+.form-toggle-link {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1rem;
+}
+
+.form-toggle-link a {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
 }
 
-/* --- Ajustes no formulário de login --- */
-.login-card .form-group {
-    margin-bottom: 1.5rem;
-}
+/* --- Responsividade (Telas Pequenas) --- */
+@media (max-width: 768px) {
+    .login-wrapper {
+        flex-direction: column;
+    }
 
-.login-card .form-actions {
-    margin-top: 0;
-}
+    .login-brand {
+        width: 100%;
+        min-height: 250px;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .login-brand .logo {
+        justify-content: center;
+    }
 
-.login-card .btn-primary {
-    width: 100%;
-    justify-content: center;
+    .login-brand h1 {
+        font-size: 1.8rem;
+    }
+
+    .login-form-wrapper {
+        width: 100%;
+        padding: 1.5rem;
+    }
+    
+    .login-card {
+        padding: 0;
+    }
 }
