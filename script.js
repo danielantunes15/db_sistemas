@@ -21,6 +21,13 @@ const totalSystemsEl = document.getElementById('total-systems');
 const onlineSystemsEl = document.getElementById('online-systems');
 const offlineSystemsEl = document.getElementById('offline-systems');
 
+// NOVOS Elementos DOM (Modal Financeiro)
+const financeModal = document.getElementById('finance-modal');
+const financeModalTitle = document.getElementById('finance-modal-title');
+const closeFinanceModalBtn = document.getElementById('close-finance-modal');
+const generatePaymentBtn = document.getElementById('generate-payment-btn');
+const paymentList = document.getElementById('payment-list');
+
 // Variáveis de estado
 let editingSiteId = null;
 
@@ -32,14 +39,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Configurar event listeners
 function setupEventListeners() {
+    // Modal de Adicionar/Editar Site
     addSiteBtn.addEventListener('click', openAddModal);
     closeModalBtn.addEventListener('click', closeSiteModal);
     cancelBtn.addEventListener('click', closeSiteModal);
     siteForm.addEventListener('submit', handleFormSubmit);
-    
     siteModal.addEventListener('click', function(e) {
         if (e.target === siteModal) {
             closeSiteModal();
+        }
+    });
+
+    // NOVO: Listeners do Modal Financeiro
+    closeFinanceModalBtn.addEventListener('click', closeFinanceModal);
+    financeModal.addEventListener('click', function(e) {
+        if (e.target === financeModal) {
+            closeFinanceModal();
+        }
+    });
+
+    // Listener para o botão de gerar mensalidade
+    generatePaymentBtn.addEventListener('click', handleGeneratePayment);
+
+    // NOVO: Event Delegation para a lista de pagamentos
+    // Ouve cliques na lista, mas só age se clicar num botão "Marcar como Pago"
+    paymentList.addEventListener('click', async function(e) {
+        if (e.target && e.target.classList.contains('mark-paid-btn')) {
+            const paymentId = e.target.dataset.paymentId;
+            const siteIdToReload = e.target.dataset.siteId;
+            e.target.disabled = true; // Desativa o botão para evitar clique duplo
+            e.target.textContent = "Pagando...";
+            await markAsPaid(paymentId, siteIdToReload);
         }
     });
 }
@@ -57,8 +87,7 @@ function updateStats() {
 
 // Renderizar sites na tela (agora é async)
 async function renderSites() {
-    // 1. Carregar dados do Supabase
-    // Pedimos explicitamente a coluna 'supabaseurl' (minúsculas)
+    // Carregar dados do Supabase
     const { data, error } = await sb.from('sites').select('*').order('created_at', { ascending: false });
     
     if (error) {
@@ -70,7 +99,7 @@ async function renderSites() {
     sites = data; 
     updateStats();
 
-    // 3. Renderizar HTML
+    // Renderizar HTML
     if (sites.length === 0) {
         sitesContainer.innerHTML = `
             <div class="empty-state">
@@ -88,7 +117,8 @@ async function renderSites() {
     sites.forEach(site => {
         const siteCard = document.createElement('div');
         siteCard.className = 'site-card';
-        // Usamos site.name, site.url, etc. Os dados vêm do Supabase
+        
+        // ATUALIZADO: Adicionado botão de Finanças
         siteCard.innerHTML = `
             <div class="site-header">
                 <div class="site-name">${site.name}</div>
@@ -104,19 +134,18 @@ async function renderSites() {
                         ${site.url}
                     </p>
                     ${site.description ? `<p>${site.description}</p>` : ''}
+                    <p><strong>Mensalidade: R$ ${Number(site.valor_mensalidade || 0).toFixed(2)}</strong></p>
                 </div>
                 <div class="site-actions">
-                    <button class="btn btn-primary visit-site" data-url="${site.url}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
-                        Visitar
-                    </button>
-                    <button class="btn btn-outline edit-site" data-id="${site.id}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/></svg>
-                        Editar
-                    </button>
-                    <button class="btn btn-danger delete-site" data-id="${site.id}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
-                        Excluir
+                    <button class="btn btn-primary visit-site" data-url="${site.url}">Visitar</button>
+                    <button class="btn btn-outline edit-site" data-id="${site.id}">Editar</button>
+                    <button class="btn btn-danger delete-site" data-id="${site.id}">Excluir</button>
+                    
+                    <button class="btn btn-success finance-site" 
+                            data-id="${site.id}" 
+                            data-name="${site.name}"
+                            data-default-value="${site.valor_mensalidade || 0}">
+                        Finanças
                     </button>
                 </div>
             </div>
@@ -150,6 +179,14 @@ function setupCardEventListeners() {
             deleteSite(siteId);
         });
     });
+
+    // NOVO: Listener para o botão de finanças
+    document.querySelectorAll('.finance-site').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const { id, name, defaultValue } = e.currentTarget.dataset;
+            openFinanceModal(id, name, defaultValue);
+        });
+    });
 }
 
 
@@ -157,13 +194,9 @@ function setupCardEventListeners() {
 function openAddModal() {
     editingSiteId = null;
     modalTitle.textContent = 'Adicionar Novo Site';
-    siteForm.reset();
+    siteForm.reset(); // Limpa todos os campos do formulário
     siteModal.classList.add('active');
-    document.getElementById('site-name').value = '';
-    document.getElementById('site-url').value = '';
-    document.getElementById('supabase-url').value = ''; 
-    document.getElementById('supabase-key').value = ''; 
-    document.getElementById('site-description').value = '';
+    document.getElementById('site-value').value = ''; // Garante que o novo campo também é limpo
 }
 
 // Abrir modal para editar site
@@ -176,16 +209,17 @@ function openEditModal(siteId) {
     
     document.getElementById('site-name').value = site.name;
     document.getElementById('site-url').value = site.url;
-    // **CORREÇÃO AQUI**
-    // Lê de 'site.supabaseurl' (minúsculas)
     document.getElementById('supabase-url').value = site.supabaseurl || ''; 
     document.getElementById('supabase-key').value = '';
     document.getElementById('site-description').value = site.description || '';
     
+    // ATUALIZADO: Preenche o valor da mensalidade
+    document.getElementById('site-value').value = site.valor_mensalidade || '0.00';
+    
     siteModal.classList.add('active');
 }
 
-// Fechar modal
+// Fechar modal de Adicionar/Editar
 function closeSiteModal() {
     siteModal.classList.remove('active');
     editingSiteId = null;
@@ -209,14 +243,14 @@ async function handleFormSubmit(e) {
     e.preventDefault();
     setLoading(true);
     
-    // **CORREÇÃO AQUI**
-    // A chave do objeto agora é 'supabaseurl' (minúsculas)
+    // ATUALIZADO: Adiciona 'valor_mensalidade'
     const formData = {
         name: document.getElementById('site-name').value,
         url: document.getElementById('site-url').value,
         supabaseurl: document.getElementById('supabase-url').value, 
         description: document.getElementById('site-description').value,
-        status: 'online'
+        status: 'online',
+        valor_mensalidade: document.getElementById('site-value').value
     };
     
     let error;
@@ -230,7 +264,6 @@ async function handleFormSubmit(e) {
     setLoading(false);
     
     if (error) {
-        // O erro não deve mais acontecer, mas se acontecer, será mostrado
         alert('Erro ao salvar sistema: ' + error.message);
     } else {
         closeSiteModal();
@@ -253,12 +286,167 @@ async function updateSite(siteId, siteData) {
 // Excluir site (agora é async)
 async function deleteSite(siteId) {
     if (confirm('Tem certeza que deseja excluir este site?')) {
+        // Primeiro, apaga os pagamentos associados (Opcional, se o 'ON DELETE CASCADE' falhar)
+        // await sb.from('mensalidades').delete().eq('site_id', siteId);
+
+        // Apaga o site
         const { error } = await sb.from('sites').delete().eq('id', siteId);
         
         if (error) {
             alert('Erro ao excluir site: ' + error.message);
         } else {
-            await renderSites(); 
+            await renderSites(); // Recarrega a lista
         }
     }
+}
+
+
+// --- NOVAS FUNÇÕES FINANCEIRAS ---
+
+// Abrir o modal financeiro
+function openFinanceModal(siteId, siteName, defaultValue) {
+    financeModalTitle.textContent = `Finanças de: ${siteName}`;
+    
+    // Armazena o ID e o Valor no próprio botão "Gerar" para fácil acesso
+    generatePaymentBtn.dataset.siteId = siteId;
+    generatePaymentBtn.dataset.defaultValue = defaultValue;
+    
+    renderPayments(siteId); // Carrega a lista de pagamentos
+    financeModal.classList.add('active');
+}
+
+// Fechar o modal financeiro
+function closeFinanceModal() {
+    financeModal.classList.remove('active');
+    paymentList.innerHTML = '<li>Carregando...</li>'; // Limpa a lista ao fechar
+}
+
+// Renderizar a lista de pagamentos
+async function renderPayments(siteId) {
+    paymentList.innerHTML = '<li>Carregando histórico...</li>';
+
+    // Busca na tabela 'mensalidades'
+    const { data, error } = await sb.from('mensalidades')
+        .select('*')
+        .eq('site_id', siteId)
+        .order('mes_referencia', { ascending: false }); // Mais recentes primeiro
+
+    if (error) {
+        paymentList.innerHTML = '<li>Erro ao carregar pagamentos.</li>';
+        console.error(error);
+        return;
+    }
+
+    if (data.length === 0) {
+        paymentList.innerHTML = '<li>Nenhum pagamento registrado.</li>';
+        return;
+    }
+
+    paymentList.innerHTML = ''; // Limpa a lista
+    
+    data.forEach(payment => {
+        const li = document.createElement('li');
+        
+        // Formata a data de referência para Mês/Ano (ex: Nov/2025)
+        const date = new Date(payment.mes_referencia + 'T12:00:00'); // Adiciona T12 para evitar bugs de fuso
+        const mesRefFormatado = date.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
+
+        const valorFormatado = Number(payment.valor).toFixed(2);
+        
+        let statusHtml = '';
+        let actionButtonHtml = '';
+
+        if (payment.status === 'Pago') {
+            statusHtml = `<span class="payment-status status-paid">Pago</span>`;
+            // Opcional: Adicionar data do pagamento
+            // statusHtml += `<span class="payment-info">em ${new Date(payment.data_pagamento).toLocaleDateString('pt-BR')}</span>`;
+        } else {
+            statusHtml = `<span class="payment-status status-pending">Pendente</span>`;
+            actionButtonHtml = `<button class="btn btn-success mark-paid-btn" data-payment-id="${payment.id}" data-site-id="${siteId}">Marcar como Pago</button>`;
+        }
+
+        li.innerHTML = `
+            <div class="payment-info">
+                <strong>${mesRefFormatado.charAt(0).toUpperCase() + mesRefFormatado.slice(1)}</strong>
+                <span>R$ ${valorFormatado}</span>
+            </div>
+            <div class="payment-actions" style="display: flex; gap: 1rem; align-items: center;">
+                ${statusHtml}
+                ${actionButtonHtml}
+            </div>
+        `;
+        paymentList.appendChild(li);
+    });
+}
+
+// Marcar uma mensalidade como PAGA
+async function markAsPaid(paymentId, siteIdToReload) {
+    const { error } = await sb.from('mensalidades')
+        .update({ 
+            status: 'Pago',
+            data_pagamento: new Date() // Define a data do pagamento
+        })
+        .eq('id', paymentId);
+    
+    if (error) {
+        alert('Erro ao marcar como pago: ' + error.message);
+    }
+    
+    // Recarrega a lista de pagamentos do modal
+    await renderPayments(siteIdToReload);
+}
+
+// Gerar uma nova mensalidade para o mês atual
+async function handleGeneratePayment() {
+    const siteId = generatePaymentBtn.dataset.siteId;
+    const defaultValue = generatePaymentBtn.dataset.defaultValue;
+
+    if (!siteId || defaultValue === undefined) {
+        alert('Erro: ID do site ou valor padrão não encontrado.');
+        return;
+    }
+
+    // Formata a data para 'YYYY-MM-01' (o primeiro dia do mês atual)
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const mesReferencia = `${year}-${month}-01`;
+
+    // Confirmação
+    if (!confirm(`Gerar mensalidade de R$${defaultValue} para o mês ${month}/${year}?`)) {
+        return;
+    }
+
+    // Desativa o botão
+    generatePaymentBtn.disabled = true;
+    generatePaymentBtn.textContent = "Gerando...";
+
+    // Insere na tabela 'mensalidades'
+    const { error } = await sb.from('mensalidades').insert([
+        {
+            site_id: siteId,
+            valor: defaultValue,
+            mes_referencia: mesReferencia,
+            status: 'Pendente'
+        }
+    ]);
+
+    if (error) {
+        if (error.code === '23505') { // Erro de "unique constraint"
+            alert('Erro: A mensalidade para este mês já foi gerada.');
+        } else {
+            alert('Erro ao gerar mensalidade: ' + error.message);
+        }
+    }
+
+    // Reativa o botão e recarrega a lista
+    generatePaymentBtn.disabled = false;
+    generatePaymentBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+            <path d="M4.5 3.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm0 3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm0 3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm3-6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm0 3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm0 3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm3-6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm0 3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5zm0 3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5z"/>
+        </svg>
+        Gerar Mensalidade (Mês Atual)
+    `;
+    await renderPayments(siteId);
 }

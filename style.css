@@ -317,11 +317,12 @@ main {
 
 .site-actions {
     display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem a linha */
     gap: 0.5rem;
 }
 
 .site-actions .btn {
-    flex: 1;
+    flex: 1 1 120px; /* Permite que os botões cresçam mas tenham uma base */
     padding: 0.5rem;
     font-size: 0.9rem;
     justify-content: center;
@@ -339,6 +340,8 @@ main {
     z-index: 1000;
     align-items: center;
     justify-content: center;
+    overflow-y: auto; /* Permite scroll se o modal for grande */
+    padding: 20px 0; /* Espaço para scroll */
 }
 
 .modal.active {
@@ -349,7 +352,7 @@ main {
     background-color: white;
     border-radius: var(--border-radius);
     width: 90%;
-    max-width: 500px;
+    max-width: 600px; /* Aumentei um pouco para o modal financeiro */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     animation: modalAppear 0.3s ease;
@@ -521,4 +524,83 @@ footer {
         gap: 1rem;
         text-align: center;
     }
+}
+
+
+/* --- NOVOS ESTILOS ADICIONADOS --- */
+
+/* Estilos para o Modal Financeiro */
+.finance-actions {
+    margin-bottom: 1.5rem;
+}
+
+.finance-actions .btn {
+    width: 100%;
+    justify-content: center;
+}
+
+.payment-list-container {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+}
+
+.payment-list-container h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+.payment-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+}
+
+.payment-list li {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.payment-list li:last-child {
+    border-bottom: none;
+}
+
+.payment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-info strong {
+    font-size: 1.1rem;
+    color: var(--dark-color);
+}
+
+.payment-info span {
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+.payment-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.status-paid {
+    color: var(--success-color);
+}
+
+.status-pending {
+    color: var(--warning-color);
+}
+
+.payment-list .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
 }
