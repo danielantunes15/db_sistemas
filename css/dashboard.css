@@ -412,3 +412,92 @@ footer {
         text-align: center;
     }
 }
+
+/* --- ADIÇÕES PARA NOVOS MÓDULOS (FINANCEIRO E CHAMADOS) --- */
+
+/* Estilos para o Modal Financeiro */
+.payment-list-container {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+}
+
+.payment-list-container h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+.payment-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 0; /* Remove padding padrão da <ul> */
+}
+
+.payment-list li {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.payment-list li:last-child {
+    border-bottom: none;
+}
+
+.payment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-info strong {
+    font-size: 1.1rem;
+    color: var(--dark-color);
+}
+
+.payment-info span {
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+.payment-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-paid {
+    color: var(--success-color);
+}
+
+.status-pending {
+    color: var(--warning-color);
+}
+
+/* Estilo para Card de Chamado (simples) */
+.chamado-card {
+    border: 1px solid #ddd; 
+    padding: 1rem; 
+    border-radius: 8px; 
+    margin-bottom: 1rem;
+    background-color: #fcfcfc;
+}
+
+.chamado-card strong {
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+}
+
+.chamado-card p {
+    margin: 0.5rem 0 0.5rem;
+    color: var(--dark-color);
+}
+
+.chamado-card small {
+    color: var(--gray-color);
+}

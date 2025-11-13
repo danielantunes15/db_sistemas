@@ -24,6 +24,9 @@
                     </ul>
                 </nav>
                 <div class="user-menu">
+                    <button class="btn btn-outline" id="open-chamados-btn" style="margin-right: 1rem; color: white; border-color: white;">
+                        Meus Chamados
+                    </button>
                     <span class="user-name" id="user-email">Carregando...</span>
                     <div class="user-avatar" id="user-avatar">DB</div>
                     <button class="btn btn-danger" id="logout-btn" style="padding: 0.5rem 1rem;">Sair</button>
@@ -116,6 +119,62 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="finance-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="finance-modal-title">Histórico Financeiro</h2>
+                <button class="close-modal" id="close-finance-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1rem;"><strong>Sistema:</strong> <span id="finance-site-name">...</span></p>
+                <div class="payment-list-container">
+                    <h3>Faturas</h3>
+                    <ul class="payment-list" id="payment-list-content">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="chamados-modal">
+        <div class="modal-content" style="max-width: 800px;"> <div class="modal-header">
+                <h2>Central de Chamados</h2>
+                <button class="close-modal" id="close-chamados-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-primary" id="novo-chamado-btn">Abrir Novo Chamado</button>
+                <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid #eee;">
+
+                <h3>Meus Chamados Abertos</h3>
+                <div id="chamados-list-container" style="max-height: 300px; overflow-y: auto;">
+                    </div>
+
+                <form id="chamado-form" style="display: none; margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+                    <h4>Novo Chamado</h4>
+                    <div class="form-group">
+                        <label for="chamado-site">Associar ao Sistema (Opcional)</label>
+                        <select id="chamado-site" class="form-control">
+                            <option value="">Nenhum</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chamado-titulo">Título</label>
+                        <input type="text" id="chamado-titulo" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="chamado-descricao">Descrição</label>
+                        <textarea id="chamado-descricao" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancel-chamado-btn">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Chamado</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <footer>
         <div class="container">
